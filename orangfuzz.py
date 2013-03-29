@@ -113,7 +113,7 @@ def generateLines(args, dvc, rnd, outputLines):
                 ]))
                 sleepAllowed = False
                 count += 1
-        else:
+        elif actionNow == DRAG_ACTION:
             outputLines.append(' '.join(str(x) for x in [
                 DRAG_ACTION,
                 # Starting co-ordinates
@@ -125,8 +125,8 @@ def generateLines(args, dvc, rnd, outputLines):
             ]))
             sleepAllowed = True
             count += 1
-        #else:
-        #    raise Exception('Unknown action: ' + actionNow)
+        else:
+            raise Exception('Unknown action: ' + actionNow)
 
     return outputLines
 
