@@ -143,7 +143,7 @@ def writeToFile(outputFile, lines):
 
 def main():
     args = parseArgs()
-    args.seed = random.random() if args.seed == None else args.seed
+    args.seed = random.random() if args.seed is None else args.seed
     rndObj = random.Random(str(args.seed))
 
     orangDevice = Unagi()
