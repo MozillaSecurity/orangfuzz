@@ -59,8 +59,7 @@ class OrangutanDevice(object):
                             ['1', str(rnd.randint(50, 1000))])
     def getHomeKeyLongPress(self, rnd):
         return ' '.join([TAP_ACTION] + [str(x) for x in self.getHomeKeyLocation()] +
-                            ['1', '2000'])
-        #                   ['1', str(rnd.randint(2000, 10000))])
+                           ['1', str(rnd.randint(2000, 10000))])
 
 
 class Unagi(OrangutanDevice):
