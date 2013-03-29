@@ -105,7 +105,7 @@ def generateLines(args, dvc, rnd, outputLines):
             ]))
             sleepAllowed = True
             count += 1
-        elif (actionNow == SLEEP_ACTION):
+        elif actionNow == SLEEP_ACTION:
             if sleepAllowed:
                 outputLines.append(' '.join(str(x) for x in [
                     SLEEP_ACTION,
