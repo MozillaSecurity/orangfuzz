@@ -144,6 +144,7 @@ def writeToFile(args, lines):
         filename = args.outputFilename
     with open(filename, 'wb') as f:
         f.write('\n'.join(lines))
+    print filename + ' has been generated.'
 
 
 def main():
