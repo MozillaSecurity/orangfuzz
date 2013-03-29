@@ -28,8 +28,8 @@ def parseArgs():
     parser = ArgumentParser(description='Create a randomly-generated orangutan script.')
     parser.add_argument('-l', '--lines', default=10000, type=int,
                         help='Set the number of lines to generate.')
-    parser.add_argument('-o', '--output', default='script.txt',
-                        help='Set the desired output file.')
+    parser.add_argument('-o', '--outputFilename', default='script.txt',
+                        help='Set the desired output filename.')
     parser.add_argument('-s', '--seed', type=float,
                         help='Set the desired seed, else default values are randomly generated.')
     args = parser.parse_args(sys.argv[1:])
@@ -155,7 +155,7 @@ def main():
     allLines = prepopulateStart(orangDevice, rndObj, allLines)
     allLines = generateLines(args, orangDevice, rndObj, allLines)
 
-    writeToFile(args.output, allLines)
+    writeToFile(args.outputFilename, allLines)
 
 
 if __name__ == '__main__':
