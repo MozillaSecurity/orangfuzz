@@ -144,7 +144,7 @@ def writeToFile(outputFile, lines):
 def main():
     args = parseArgs()
     args.seed = random.random() if args.seed is None else args.seed
-    rndObj = random.Random(str(args.seed))
+    rndObj = random.Random(args.seed)
 
     orangDevice = Unagi()
     allLines = []
