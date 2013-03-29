@@ -155,7 +155,6 @@ def main():
     orangDevice = Unagi()
     allLines = []
 
-    allLines.append('# Current seed is: ' + str(args.seed))
     allLines = prepopulateStart(orangDevice, rndObj, allLines)
     allLines = generateLines(args, orangDevice, rndObj, allLines)
 
