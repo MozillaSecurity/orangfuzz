@@ -144,7 +144,8 @@ def writeToFile(outputFile, lines):
 
 def main():
     args = parseArgs()
-    args.seed = int(math.floor(random.random()*math.pow(2,28))) if args.seed is None else args.seed
+    if args.seed is None:
+        args.seed = int(math.floor(random.random() * math.pow(2, 28)))
     rndObj = random.Random(args.seed)
 
     orangDevice = Unagi()
