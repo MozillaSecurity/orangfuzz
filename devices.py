@@ -24,10 +24,10 @@ class OrangutanDevice(object):
         return self.loc
     def getHomeKeyTap(self, rnd):
         return ' '.join([TAP_ACTION] + [str(x) for x in self.getHomeKeyLocation()] +
-                            ['1', str(rnd.randint(50, 1000))])
+                            ['1', str(rnd.randint(50, 1000)), '; # Home key tap;'])
     def getHomeKeyLongPress(self, rnd):
         return ' '.join([TAP_ACTION] + [str(x) for x in self.getHomeKeyLocation()] +
-                           ['1', str(rnd.randint(2000, 10000))])
+                           ['1', str(rnd.randint(2000, 10000)), '; # Home key long press;'])
 
 
 class Unagi(OrangutanDevice):
