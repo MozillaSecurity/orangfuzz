@@ -12,7 +12,9 @@ def writeToFile(args, lines):
     else:
         filename = args.outputFilename
     with open(filename, 'wb') as f:
+        f.write('# fuzzSeed: ' + str(args.seed) + '\n')
         f.write('\n'.join(lines))
+        f.flush()
     print filename + ' has been generated.'
 
 if __name__ == '__main__':
