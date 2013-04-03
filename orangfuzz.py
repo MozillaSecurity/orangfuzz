@@ -3,7 +3,11 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
-
+#
+# orangfuzz is an experimental UI fuzzer based on the orangutan framework for Firefox OS devices.
+#
+# To run: ./orangfuzz.py
+#
 #  Framework (orangutan) syntax:
 #  tap [x] [y] [num times] [duration of each tap in msec]
 #  sleep [duration in msec]
@@ -28,6 +32,7 @@ else:
 
 
 def parseArgs():
+    '''Parse arguments given to orangfuzz.'''
     parser = ArgumentParser(description='Create a randomly-generated orangutan script.')
     parser.add_argument('-l', '--lines', default=10000, type=int,
                         help='Set the number of lines to generate.')
@@ -44,6 +49,7 @@ def parseArgs():
 ###################
 
 def generateLines(args, dvc, rnd, outputLines):
+    '''Get orangfuzz to generate lines.'''
     count = 1
     sleepAllowed = True
 
@@ -99,6 +105,7 @@ def generateLines(args, dvc, rnd, outputLines):
 
 
 def main():
+    '''Run orangfuzz and randomly generate lines for the desired device.'''
     args = parseArgs()
     if args.seed is None:
         args.seed = int(math.floor(random.random() * math.pow(2, 28)))
