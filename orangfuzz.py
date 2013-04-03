@@ -21,7 +21,7 @@ from devices import Unagi
 from prepopulation import prepopulateStart
 from utils import writeToFile
 
-if sys.version_info >= (2, 6):
+if sys.version_info >= (2, 7):
     from argparse import ArgumentParser
 else:
     raise Exception('orangfuzz has only been tested on Python 2.7 and above.')
