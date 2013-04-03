@@ -8,6 +8,14 @@ import math
 import random
 import sys
 
+from actions import ACTION_CHOICES
+from actions import DRAG_ACTION
+from actions import SLEEP_ACTION
+from actions import TAP_ACTION
+from devices import Unagi
+from prepopulation import prepopulateStart
+from utils import writeToFile
+
 if sys.version_info >= (2, 6):
     from argparse import ArgumentParser
 else:
@@ -17,11 +25,6 @@ else:
 # tap [x] [y] [num times] [duration of each tap in msec]
 # sleep [duration in msec]
 # drag [start x] [start y] [end x] [end y] [num steps] [duration in msec]
-
-TAP_ACTION = 'tap'
-SLEEP_ACTION = 'sleep'
-DRAG_ACTION = 'drag'
-ACTION_CHOICES = (TAP_ACTION, SLEEP_ACTION, DRAG_ACTION)
 
 
 def parseArgs():
@@ -34,51 +37,6 @@ def parseArgs():
                         help='Set the desired seed, else default values are randomly generated.')
     args = parser.parse_args(sys.argv[1:])
     return args
-
-
-##################
-# Device support #
-##################
-
-class OrangutanDevice(object):
-    def setMaxHorizPixels(self, hpx):
-        self.hpx = hpx
-    def getMaxHorizPixels(self):
-        return self.hpx
-    def setMaxVertPixels(self, vpx):
-        self.vpx = vpx
-    def getMaxVertPixels(self):
-        return self.vpx
-    def setHomeKeyLocation(self, loc):
-        # See bug 838267, a bug on supporting the HOME key for the orangutan library
-        assert isinstance(loc, list), 'Must be a list because we concatenate this later.'
-        self.loc = loc
-    def getHomeKeyLocation(self):
-        return self.loc
-    def getHomeKeyTap(self, rnd):
-        return ' '.join([TAP_ACTION] + [str(x) for x in self.getHomeKeyLocation()] +
-                            ['1', str(rnd.randint(50, 1000))])
-    def getHomeKeyLongPress(self, rnd):
-        return ' '.join([TAP_ACTION] + [str(x) for x in self.getHomeKeyLocation()] +
-                           ['1', str(rnd.randint(2000, 10000))])
-
-
-class Unagi(OrangutanDevice):
-    def __init__(self):
-        super(Unagi, self).__init__()
-        self.setMaxHorizPixels(320)
-        self.setMaxVertPixels(520)
-        self.setHomeKeyLocation([44, 515])
-
-
-##################
-# Pre-population #
-##################
-
-def prepopulateStart(dvc, rnd, lines):
-    # We should also ensure B2G is in a reset state, before/after(?) the FTE wizard.
-    lines.append(dvc.getHomeKeyTap(rnd))
-    return lines
 
 
 ###################
@@ -130,21 +88,6 @@ def generateLines(args, dvc, rnd, outputLines):
             raise Exception('Unknown action: ' + actionNow)
 
     return outputLines
-
-
-#################
-# Miscellaneous #
-#################
-
-def writeToFile(args, lines):
-    lines.append('')  # Ending line break
-    if args.outputFilename is None:
-        filename = 'script-orangutan-' + str(args.seed) + '.txt'
-    else:
-        filename = args.outputFilename
-    with open(filename, 'wb') as f:
-        f.write('\n'.join(lines))
-    print filename + ' has been generated.'
 
 
 def main():
