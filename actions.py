@@ -7,6 +7,7 @@
 TAP_ACTION = 'tap'
 SLEEP_ACTION = 'sleep'
 DRAG_ACTION = 'drag'
+# FIXME: What about pinch actions?
 ACTION_CHOICES = (TAP_ACTION, SLEEP_ACTION, DRAG_ACTION)
 
 if __name__ == '__main__':
