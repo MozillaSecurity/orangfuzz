@@ -4,6 +4,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#  Framework (orangutan) syntax:
+#  tap [x] [y] [num times] [duration of each tap in msec]
+#  sleep [duration in msec]
+#  drag [start x] [start y] [end x] [end y] [num steps] [duration in msec]
+
 import math
 import random
 import sys
@@ -20,11 +25,6 @@ if sys.version_info >= (2, 6):
     from argparse import ArgumentParser
 else:
     raise Exception('orangfuzz has only been tested on Python 2.7 and above.')
-
-# Framework (orangutan) syntax:
-# tap [x] [y] [num times] [duration of each tap in msec]
-# sleep [duration in msec]
-# drag [start x] [start y] [end x] [end y] [num steps] [duration in msec]
 
 
 def parseArgs():
