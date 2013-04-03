@@ -48,7 +48,15 @@ def generateLines(args, dvc, rnd, outputLines):
     sleepAllowed = True
 
     while (count <= args.lines):
-        if count % 1000 == 0:
+        # Tap the home key back to the home screen.
+        if count % rnd.randint(1, 500) == 0:
+            outputLines.append(dvc.getHomeKeyTap(rnd))
+            sleepAllowed = True
+            count += 1
+            continue
+
+        # Brings up the list of applications with a long press of the home key.
+        if count % rnd.randint(1, 1000) == 0:
             outputLines.append(dvc.getHomeKeyLongPress(rnd))
             sleepAllowed = True
             count += 1
