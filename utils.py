@@ -7,6 +7,12 @@
 # Useful utility functions for orangfuzz.
 
 
+def countDescAction(count, desc, action):
+    '''Returns the count number with the description in the format accepted by orangutan.'''
+    # Note the spaces before the first "{" and after the second "}".
+    return ' { count=' + str(count) + '; ' + desc + ' } ' + action
+
+
 def writeToFile(args, lines):
     '''Write generated lines to file, including the seed.'''
     lines.append('')  # Ending line break

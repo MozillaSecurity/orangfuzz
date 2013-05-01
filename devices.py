@@ -8,6 +8,7 @@
 # More information on orangutan: https://github.com/wlach/orangutan
 
 from actions import TAP_ACTION
+from utils import countDescAction
 
 
 class OrangutanDevice(object):
@@ -33,14 +34,18 @@ class OrangutanDevice(object):
     def getHomeKeyLocation(self):
         '''Gets the location of the home key.'''
         return self.loc
-    def getHomeKeyTap(self, rnd):
+    def getHomeKeyTap(self, rnd, count):
         '''Trigger a tap on the home key.'''
-        return ' '.join([TAP_ACTION] + [str(x) for x in self.getHomeKeyLocation()] +
-                            ['1', str(rnd.randint(50, 1000)), '; # Home key tap;'])
-    def getHomeKeyLongPress(self, rnd):
+        return ' '.join([countDescAction(count, 'Home key tap', TAP_ACTION)] +
+                            [str(x) for x in self.getHomeKeyLocation()] +
+                            ['1', str(rnd.randint(50, 1000))]
+                        )
+    def getHomeKeyLongPress(self, rnd, count):
         '''Trigger a long press on the home key, defined as >= 2 seconds.'''
-        return ' '.join([TAP_ACTION] + [str(x) for x in self.getHomeKeyLocation()] +
-                           ['1', str(rnd.randint(2000, 10000)), '; # Home key long press;'])
+        return ' '.join([countDescAction(count, 'Home key long press', TAP_ACTION)] +
+                            [str(x) for x in self.getHomeKeyLocation()] +
+                            ['1', str(rnd.randint(2000, 10000))]
+                        )
 
 
 class Unagi(OrangutanDevice):
