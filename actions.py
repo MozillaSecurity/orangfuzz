@@ -12,5 +12,11 @@ DRAG_ACTION = 'drag'
 # FIXME: What about pinch actions?
 ACTION_CHOICES = (TAP_ACTION, SLEEP_ACTION, DRAG_ACTION)
 
+
+def getRandomSleep(rnd):
+    '''Returns sleeps of random durations.'''
+    return ' '.join(str(x) for x in [SLEEP_ACTION, rnd.randint(100, 3000)])
+
+
 if __name__ == '__main__':
     pass

@@ -8,7 +8,8 @@
 # More information on orangutan: https://github.com/wlach/orangutan
 
 from actions import TAP_ACTION
-from utils import countDescAction
+from actions import getRandomSleep
+from utils import countWithDesc
 
 
 class OrangutanDevice(object):
@@ -26,25 +27,43 @@ class OrangutanDevice(object):
     def getMaxVertPixels(self):
         '''Gets the maximum vertical pixels.'''
         return self.vpx
-    def setHomeKeyLocation(self, loc):
+    def setButtonVertPixelOffset(self, offset):
+        '''Sets the number of pixels offset for the phone button(s).'''
+        self.offset = offset
+    def getButtonVertPixelOffset(self):
+        '''Gets the number of pixels offset for the phone button(s).'''
+        return self.offset
+    def setHomeKeyLocation(self, homeKeyLoc):
         '''Sets the location of the home key.'''
         # See bug 838267, a bug on supporting the HOME key for the orangutan library
-        assert isinstance(loc, list), 'Must be a list because we concatenate this later.'
-        self.loc = loc
+        assert isinstance(homeKeyLoc, list), 'Must be a list because we concatenate this later.'
+        self.homeKeyLoc = homeKeyLoc
     def getHomeKeyLocation(self):
         '''Gets the location of the home key.'''
-        return self.loc
+        return self.homeKeyLoc
     def getHomeKeyTap(self, rnd, count):
         '''Trigger a tap on the home key.'''
-        return ' '.join([countDescAction(count, 'Home key tap', TAP_ACTION)] +
+        return ' '.join([countWithDesc(count, 'Home key tap') + TAP_ACTION] +
                             [str(x) for x in self.getHomeKeyLocation()] +
                             ['1', str(rnd.randint(50, 1000))]
                         )
     def getHomeKeyLongPress(self, rnd, count):
         '''Trigger a long press on the home key, defined as >= 2 seconds.'''
-        return ' '.join([countDescAction(count, 'Home key long press', TAP_ACTION)] +
+        return ' '.join([countWithDesc(count, 'Home key long press') + TAP_ACTION] +
                             [str(x) for x in self.getHomeKeyLocation()] +
                             ['1', str(rnd.randint(2000, 10000))]
+                        )
+    def getAppSwitcherXButtonLocation(self):
+        '''Gets the location of the X button in the app switcher.'''
+        return [int(0.2 * self.hpx), int(0.2333 * (self.vpx - self.offset))]
+    def getForceCloseApp(self, rnd, count):
+        '''Force close an application.'''
+        return ' '.join([countWithDesc(count, 'Force close an application')] +
+                            [self.getHomeKeyLongPress(rnd, count) + ' ; '] +
+                            [getRandomSleep(rnd) + ' ; '] +
+                            [TAP_ACTION] +
+                            [str(x) for x in self.getAppSwitcherXButtonLocation()] +
+                            ['1', str(rnd.randint(50, 1000))]
                         )
 
 
@@ -55,6 +74,7 @@ class Unagi(OrangutanDevice):
         super(Unagi, self).__init__()
         self.setMaxHorizPixels(320)
         self.setMaxVertPixels(520)
+        self.setButtonVertPixelOffset(40)
         self.setHomeKeyLocation([44, 515])
 
 if __name__ == '__main__':

@@ -21,6 +21,7 @@ from actions import ACTION_CHOICES
 from actions import DRAG_ACTION
 from actions import SLEEP_ACTION
 from actions import TAP_ACTION
+from actions import getRandomSleep
 from devices import Unagi
 from prepopulation import prepopulateStart
 from utils import writeToFile
@@ -68,6 +69,13 @@ def generateLines(args, dvc, rnd, outputLines):
             count += 1
             continue
 
+        # Force quits current application.
+        if count % rnd.randint(1, 20) == 0:
+            outputLines.append(dvc.getForceCloseApp(rnd, count))
+            sleepAllowed = True
+            count += 1
+            continue
+
         actionNow = rnd.choice(ACTION_CHOICES)
         if actionNow == TAP_ACTION:
             outputLines.append(' '.join(str(x) for x in [
@@ -80,10 +88,7 @@ def generateLines(args, dvc, rnd, outputLines):
             count += 1
         elif actionNow == SLEEP_ACTION:
             if sleepAllowed:
-                outputLines.append(' '.join(str(x) for x in [
-                    SLEEP_ACTION,
-                    rnd.randint(100, 3000)
-                ]))
+                outputLines.append(getRandomSleep(rnd))
                 sleepAllowed = False
                 count += 1
         elif actionNow == DRAG_ACTION:

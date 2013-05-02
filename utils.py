@@ -7,10 +7,10 @@
 # Useful utility functions for orangfuzz.
 
 
-def countDescAction(count, desc, action):
+def countWithDesc(count, desc):
     '''Returns the count number with the description in the format accepted by orangutan.'''
     # Note the spaces before the first "{" and after the second "}".
-    return ' { count=' + str(count) + '; ' + desc + ' } ' + action
+    return ' { count=' + str(count) + '; ' + desc + ' } '
 
 
 def writeToFile(args, lines):
