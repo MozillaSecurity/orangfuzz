@@ -65,6 +65,12 @@ class OrangutanDevice(object):
                             [str(x) for x in self.getAppSwitcherXButtonLocation()] +
                             ['1', str(rnd.randint(50, 1000))]
                         )
+    def getContactsDefaultLocation(self):
+        '''Gets the default location of the Contacts app.'''
+        return [int(0.62 * self.hpx), int(0.08 * (self.vpx - self.offset))]
+    def getSettingsDefaultLocationOnSecondScreen(self):
+        '''Gets the default location of the Settings app on the second homescreen.'''
+        return [int(0.86 * self.hpx), int(0.87 * (self.vpx - self.offset))]
 
 
 class Unagi(OrangutanDevice):
