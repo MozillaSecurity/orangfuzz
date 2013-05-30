@@ -55,7 +55,7 @@ class OrangutanDevice(object):
                         )
     def getAppSwitcherXButtonLocation(self):
         '''Gets the location of the X button in the app switcher.'''
-        return [int(0.2 * self.hpx), int(0.2333 * (self.vpx - self.offset))]
+        return [int(0.1 * self.hpx), int(0.15 * (self.vpx - self.offset))]
     def getForceCloseApp(self, rnd, count):
         '''Force close an application.'''
         return ' '.join([countWithDesc(count, 'Force close an application')] +
