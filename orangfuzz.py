@@ -76,7 +76,7 @@ def generateLines(args, dvc, rnd, outputLines):
             count += 1
             continue
 
-        # Force quits current application.
+        # Toggles airplane mode.
         if count % rnd.randint(1, 20) == 0:
             outputLines.append(dvc.getToggleAirplaneMode(rnd, count))
             sleepAllowed = True
