@@ -77,8 +77,15 @@ def generateLines(args, dvc, rnd, outputLines):
             continue
 
         # Toggles airplane mode.
-        if count % rnd.randint(1, 20) == 0:
+        if count % rnd.randint(1, 1000) == 0:
             outputLines.append(dvc.getToggleAirplaneMode(rnd, count))
+            sleepAllowed = True
+            count += 1
+            continue
+
+        # Toggles geolocation mode.
+        if count % rnd.randint(1, 1000) == 0:
+            outputLines.append(dvc.getToggleGeolocationMode(rnd, count))
             sleepAllowed = True
             count += 1
             continue

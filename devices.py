@@ -73,6 +73,9 @@ class OrangutanDevice(object):
     def getAirplaneModeLocationInSettingsApp(self):
         '''Gets the default location of Airplane mode in the Settings app.'''
         return [int(0.86 * self.hpx), int(0.27 * (self.vpx - self.offset))]
+    def getGeolocationModeLocationInSettingsApp(self):
+        '''Gets the default location of geolocation mode in the Settings app.'''
+        return [int(0.86 * self.hpx), int(0.4 * (self.vpx - self.offset))]
     def getToggleAirplaneMode(self, rnd, count):
         '''Toggles airplane mode.'''
         return ' '.join([countWithDesc(count, 'Toggle airplane mode')] +
@@ -86,6 +89,21 @@ class OrangutanDevice(object):
                             [actions.getRandomSleep(rnd, count) + ' ; '] +
                             [actions.TAP_ACTION] +
                             [str(x) for x in self.getAirplaneModeLocationInSettingsApp()] +
+                            ['1', str(rnd.randint(50, 1000))]
+                        )
+    def getToggleGeolocationMode(self, rnd, count):
+        '''Toggles geolocation mode.'''
+        return ' '.join([countWithDesc(count, 'Toggle geolocation mode')] +
+                            [self.getHomeKeyTap(rnd, count) + ' ; '] +
+                            [actions.getRandomSleep(rnd, count) + ' ; '] +
+                            [actions.getDragToRightHomescreen(rnd, count) + ' ; '] +
+                            [actions.getRandomSleep(rnd, count) + ' ; '] +
+                            [actions.TAP_ACTION] +
+                            [str(x) for x in self.getSettingsDefaultLocationOnSecondScreen()] +
+                            ['1', str(rnd.randint(50, 1000)) + ' ; '] +
+                            [actions.getRandomSleep(rnd, count) + ' ; '] +
+                            [actions.TAP_ACTION] +
+                            [str(x) for x in self.getGeolocationModeLocationInSettingsApp()] +
                             ['1', str(rnd.randint(50, 1000))]
                         )
 
