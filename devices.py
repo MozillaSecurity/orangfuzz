@@ -40,11 +40,11 @@ class OrangutanDevice(object):
     def getHomeKeyLocation(self):
         '''Gets the location of the home key.'''
         return self.homeKeyLoc
-    def getHomeKeyTap(self, rnd, count):
+    def getHomeKeyTap(self, rnd, count, tapCounts):
         '''Trigger a tap on the home key.'''
         return ' '.join([countWithDesc(count, 'Home key tap') + actions.TAP_ACTION] +
                             [str(x) for x in self.getHomeKeyLocation()] +
-                            ['1', str(rnd.randint(50, 1000))]
+                            [str(tapCounts), str(rnd.randint(50, 1000))]
                         )
     def getHomeKeyLongPress(self, rnd, count):
         '''Trigger a long press on the home key, defined as >= 2 seconds.'''
@@ -79,7 +79,7 @@ class OrangutanDevice(object):
     def getToggleAirplaneMode(self, rnd, count):
         '''Toggles airplane mode.'''
         return ' '.join([countWithDesc(count, 'Toggle airplane mode')] +
-                            [self.getHomeKeyTap(rnd, count) + ' ; '] +
+                            [self.getHomeKeyTap(rnd, count, 5) + ' ; '] +
                             [actions.getRandomSleep(rnd, count) + ' ; '] +
                             [actions.getDragToRightHomescreen(rnd, count) + ' ; '] +
                             [actions.getRandomSleep(rnd, count) + ' ; '] +
@@ -94,7 +94,7 @@ class OrangutanDevice(object):
     def getToggleGeolocationMode(self, rnd, count):
         '''Toggles geolocation mode.'''
         return ' '.join([countWithDesc(count, 'Toggle geolocation mode')] +
-                            [self.getHomeKeyTap(rnd, count) + ' ; '] +
+                            [self.getHomeKeyTap(rnd, count, 5) + ' ; '] +
                             [actions.getRandomSleep(rnd, count) + ' ; '] +
                             [actions.getDragToRightHomescreen(rnd, count) + ' ; '] +
                             [actions.getRandomSleep(rnd, count) + ' ; '] +

@@ -11,7 +11,7 @@ def prepopulateStart(dvc, rnd, lines):
     '''Prepopulate the phone as desired.'''
     # We should also ensure B2G is in a reset state, before/after(?) the FTE wizard.
     # FIXME: Make use of b2gpopulate? https://github.com/mozilla/b2gpopulate
-    lines.append(dvc.getHomeKeyTap(rnd, 'PREPOPULATING'))
+    lines.append(dvc.getHomeKeyTap(rnd, 'PREPOPULATING', 3))
     return lines
 
 if __name__ == '__main__':
