@@ -7,8 +7,7 @@
 # Define devices supported by the orangutan framework here.
 # More information on orangutan: https://github.com/wlach/orangutan
 
-from actions import TAP_ACTION
-from actions import getRandomSleep
+import actions
 from utils import countWithDesc
 
 
@@ -43,13 +42,13 @@ class OrangutanDevice(object):
         return self.homeKeyLoc
     def getHomeKeyTap(self, rnd, count):
         '''Trigger a tap on the home key.'''
-        return ' '.join([countWithDesc(count, 'Home key tap') + TAP_ACTION] +
+        return ' '.join([countWithDesc(count, 'Home key tap') + actions.TAP_ACTION] +
                             [str(x) for x in self.getHomeKeyLocation()] +
                             ['1', str(rnd.randint(50, 1000))]
                         )
     def getHomeKeyLongPress(self, rnd, count):
         '''Trigger a long press on the home key, defined as >= 2 seconds.'''
-        return ' '.join([countWithDesc(count, 'Home key long press') + TAP_ACTION] +
+        return ' '.join([countWithDesc(count, 'Home key long press') + actions.TAP_ACTION] +
                             [str(x) for x in self.getHomeKeyLocation()] +
                             ['1', str(rnd.randint(2000, 10000))]
                         )
@@ -60,17 +59,35 @@ class OrangutanDevice(object):
         '''Force close an application.'''
         return ' '.join([countWithDesc(count, 'Force close an application')] +
                             [self.getHomeKeyLongPress(rnd, count) + ' ; '] +
-                            [getRandomSleep(rnd) + ' ; '] +
-                            [TAP_ACTION] +
+                            [actions.getRandomSleep(rnd, count) + ' ; '] +
+                            [actions.TAP_ACTION] +
                             [str(x) for x in self.getAppSwitcherXButtonLocation()] +
                             ['1', str(rnd.randint(50, 1000))]
                         )
     def getContactsDefaultLocation(self):
         '''Gets the default location of the Contacts app.'''
-        return [int(0.62 * self.hpx), int(0.08 * (self.vpx - self.offset))]
+        return [int(0.62 * self.hpx), int(0.92 * (self.vpx - self.offset))]
     def getSettingsDefaultLocationOnSecondScreen(self):
         '''Gets the default location of the Settings app on the second homescreen.'''
-        return [int(0.86 * self.hpx), int(0.87 * (self.vpx - self.offset))]
+        return [int(0.86 * self.hpx), int(0.13 * (self.vpx - self.offset))]
+    def getAirplaneModeLocationInSettingsApp(self):
+        '''Gets the default location of Airplane mode in the Settings app.'''
+        return [int(0.86 * self.hpx), int(0.27 * (self.vpx - self.offset))]
+    def getToggleAirplaneMode(self, rnd, count):
+        '''Toggles airplane mode.'''
+        return ' '.join([countWithDesc(count, 'Toggle airplane mode')] +
+                            [self.getHomeKeyTap(rnd, count) + ' ; '] +
+                            [actions.getRandomSleep(rnd, count) + ' ; '] +
+                            [actions.getDragToRightHomescreen(rnd, count) + ' ; '] +
+                            [actions.getRandomSleep(rnd, count) + ' ; '] +
+                            [actions.TAP_ACTION] +
+                            [str(x) for x in self.getSettingsDefaultLocationOnSecondScreen()] +
+                            ['1', str(rnd.randint(50, 1000)) + ' ; '] +
+                            [actions.getRandomSleep(rnd, count) + ' ; '] +
+                            [actions.TAP_ACTION] +
+                            [str(x) for x in self.getAirplaneModeLocationInSettingsApp()] +
+                            ['1', str(rnd.randint(50, 1000))]
+                        )
 
 
 class Unagi(OrangutanDevice):

@@ -24,7 +24,7 @@ from actions import TAP_ACTION
 from actions import getRandomSleep
 from devices import Unagi
 from prepopulation import prepopulateStart
-from utils import writeToFile
+from utils import countWithDesc, writeToFile
 
 if sys.version_info >= (2, 7):
     from argparse import ArgumentParser
@@ -70,8 +70,15 @@ def generateLines(args, dvc, rnd, outputLines):
             continue
 
         # Force quits current application.
-        if count % rnd.randint(1, 20) == 0:
+        if count % rnd.randint(1, 1000) == 0:
             outputLines.append(dvc.getForceCloseApp(rnd, count))
+            sleepAllowed = True
+            count += 1
+            continue
+
+        # Force quits current application.
+        if count % rnd.randint(1, 20) == 0:
+            outputLines.append(dvc.getToggleAirplaneMode(rnd, count))
             sleepAllowed = True
             count += 1
             continue
@@ -79,7 +86,7 @@ def generateLines(args, dvc, rnd, outputLines):
         actionNow = rnd.choice(ACTION_CHOICES)
         if actionNow == TAP_ACTION:
             outputLines.append(' '.join(str(x) for x in [
-                TAP_ACTION,
+                countWithDesc(count, 'Tap action') + TAP_ACTION,
                 rnd.randint(1, dvc.getMaxHorizPixels()), rnd.randint(1, dvc.getMaxVertPixels()),
                 rnd.randint(1, 3),
                 rnd.randint(50, 1000)
@@ -88,12 +95,12 @@ def generateLines(args, dvc, rnd, outputLines):
             count += 1
         elif actionNow == SLEEP_ACTION:
             if sleepAllowed:
-                outputLines.append(getRandomSleep(rnd))
+                outputLines.append(getRandomSleep(rnd, count))
                 sleepAllowed = False
                 count += 1
         elif actionNow == DRAG_ACTION:
             outputLines.append(' '.join(str(x) for x in [
-                DRAG_ACTION,
+                countWithDesc(count, 'Drag action') + DRAG_ACTION,
                 # Starting co-ordinates
                 rnd.randint(1, dvc.getMaxHorizPixels()), rnd.randint(1, dvc.getMaxVertPixels()),
                 # Ending co-ordinates
