@@ -56,14 +56,14 @@ def generateLines(args, dvc, rnd, outputLines):
 
     while (count <= args.lines):
         # Tap the home key once, not necessarily back to the home screen.
-        if count % rnd.randint(1, 50) == 0:
+        if count % rnd.randint(1, 500) == 0:
             outputLines.append(dvc.getHomeKeyTap(rnd, count, rnd.randint(1, 2)))
             sleepAllowed = True
             count += 1
             continue
 
         # Tap the home key back to the home screen.
-        if count % rnd.randint(1, 500) == 0:
+        if count % rnd.randint(1, 1000) == 0:
             outputLines.append(dvc.getHomeKeyTap(rnd, count, 5))
             sleepAllowed = True
             count += 1
